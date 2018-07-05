@@ -13,7 +13,7 @@ use \Slim\Http\Response as Response;
  */
 class IndexController extends BaseController {
     public function indexAction(Request $request, Response $response, $args) {
-        $a = User::get();
-        return $this->response($response)->success($a);
+        $user = User::get();
+        return $this->response($response)->success($user);
     }
 }

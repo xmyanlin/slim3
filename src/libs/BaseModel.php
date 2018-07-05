@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 class BaseModel extends Model {
 
     protected $_connection = "default";
+
+    private static $_instance = array();
     /**
      * 构造函数
      *
@@ -34,20 +36,23 @@ class BaseModel extends Model {
         if (!isset(Config::instance()->Db[$this->_connection])) {
             throw new \Exception('The database configuration is not found.', 500);
         }
-        $capsule = new Manager;
-        $config = Config::instance()->Db[$this->_connection];
-        $setting = [
-            'driver' => 'mysql',
-            'host' => "localhost",
-            'database' => "test",
-            'username' => $config["user"],
-            'password' => $config["pass"],
-            'charset'   => 'utf8',
-            'prefix'    => '',
-        ];
-        $capsule->addConnection($setting);
+        if(!isset(self::$_instance[$this->_connection])){
+            $capsule = new Manager;
+            $config = Config::instance()->Db[$this->_connection];
+            $setting = [
+                'driver' => 'mysql',
+                'host' => "localhost",
+                'database' => "test",
+                'username' => $config["user"],
+                'password' => $config["pass"],
+                'charset'   => 'utf8',
+                'prefix'    => '',
+            ];
+            $capsule->addConnection($setting);
 
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
+            $capsule->setAsGlobal();
+            $capsule->bootEloquent();
+            self::$_instance[$this->_connection] = true;
+        }
     }
 }
