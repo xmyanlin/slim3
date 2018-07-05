@@ -18,15 +18,16 @@ if (!ini_get('date.timezone')) {
 define('APP_PATH', dirname(__FILE__) . '/../src/');
 define('LOG_PATH', dirname(__FILE__) . '/../logs/');
 
+require __DIR__ . '/../vendor/autoload.php';
+
 // 检测debug环境
-if (file_exists(LOG_PATH . 'DEBUG') || getenv('DEBUG')) {
+if (file_exists(LOG_PATH . 'DEBUG') || getenv('DEBUG') || env("DEBUG")) {
     $_ENV['DEBUG'] = True;
     define('DEBUG', True);
 } else {
     define('DEBUG', false);
     $_ENV['DEBUG'] = false;
 }
-require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 

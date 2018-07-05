@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 
-//use App\Models\User;
 use App\Models\User;
 use \Slim\Http\Request as Request;
 use \Slim\Http\Response as Response;

@@ -64,29 +64,6 @@ class Config extends ClassBase {
     }
 
     /**
-     * 设置缓存
-     *
-     * @param string $name  缓存名
-     * @param array  $value 缓存值
-     *
-     * @return boolean
-     */
-    public function set($name, $value) {
-        if (!isset($this->$name)) {
-            $this->$name = $this->_loadFile($name);
-        }
-        if (is_array($value)) {
-            $this->$name = array_merge($this->$name, $value);
-            $filePath    = CFis::instance()->getPathAlias('configs,' . $name . '.php');
-            file_put_contents($filePath, '<?php ' . "\n return " . CTools::array2string($this->$name) . ';');
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * 加载配置文件
      *
      * @param string $name 配置集名
